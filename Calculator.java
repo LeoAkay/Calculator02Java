@@ -6,9 +6,9 @@ public class Calculator implements ActionListener {
     JFrame frame;
     JTextField textfield;
     JButton[] numberButtons = new JButton[10];
-    JButton[] functionButtons = new JButton[9];
-    JButton addButton,subButton,mulButton,divButton;
-    JButton decButton,equButton,delButton,clrButton,negButton;
+    JButton[] functionButtons = new JButton[10];
+    JButton addButton,subButton,mulButton,divButton,negButton;
+    JButton decButton,equButton,delButton,clrButton,remButton;
     JPanel panel;
 
     Font myFont =new Font("Ink Free",Font.BOLD,30);
@@ -28,23 +28,25 @@ public class Calculator implements ActionListener {
         subButton=new JButton("-");
         mulButton=new JButton("*");
         divButton=new JButton("/");
+        remButton=new JButton("%");
         decButton=new JButton(".");
         equButton=new JButton("=");
-        delButton=new JButton("Del");
-        clrButton=new JButton("Clear");
+        delButton=new JButton("Delete");
+        clrButton=new JButton("AC");
         negButton=new JButton("(-)");
 
         functionButtons[0]=addButton;
         functionButtons[1]=subButton;
         functionButtons[2]=mulButton;
         functionButtons[3]=divButton;
-        functionButtons[4]=decButton;
-        functionButtons[5]=equButton;
-        functionButtons[6]=delButton;
-        functionButtons[7]=clrButton;
-        functionButtons[8]=negButton;
+        functionButtons[4]=remButton;
+        functionButtons[5]=decButton;
+        functionButtons[6]=equButton;
+        functionButtons[7]=delButton;
+        functionButtons[8]=clrButton;
+        functionButtons[9]=negButton;
 
-        for(int i=0;i<9;i++){
+        for(int i=0;i<10;i++){
             functionButtons[i].addActionListener(this);
             functionButtons[i].setFont(myFont);
             functionButtons[i].setFocusable(false);
@@ -56,35 +58,37 @@ public class Calculator implements ActionListener {
             numberButtons[i].setFocusable(false);
         }
 
-        negButton.setBounds(50,430,100,50);
-        delButton.setBounds(150,430,100,50);
-        clrButton.setBounds(250,430,100,50);
+
+        delButton.setBounds(110,430,150,50);
+
 
         panel=new JPanel();
         panel.setBounds(50,100,300,300);
-        panel.setLayout(new GridLayout(4,4,10,10));
-
-        panel.add(numberButtons[1]);
-        panel.add(numberButtons[2]);
-        panel.add(numberButtons[3]);
-        panel.add(addButton);
-        panel.add(numberButtons[4]);
-        panel.add(numberButtons[5]);
-        panel.add(numberButtons[6]);
-        panel.add(subButton);
+        panel.setLayout(new GridLayout(5,4,10,10));
+        panel.add(clrButton);
+        panel.add(negButton);
+        panel.add(remButton);
+        panel.add(divButton);
         panel.add(numberButtons[7]);
         panel.add(numberButtons[8]);
         panel.add(numberButtons[9]);
         panel.add(mulButton);
-        panel.add(decButton);
+        panel.add(numberButtons[4]);
+        panel.add(numberButtons[5]);
+        panel.add(numberButtons[6]);
+        panel.add(subButton);
+        panel.add(numberButtons[1]);
+        panel.add(numberButtons[2]);
+        panel.add(numberButtons[3]);
+        panel.add(addButton);
         panel.add(numberButtons[0]);
+        panel.add(decButton);
         panel.add(equButton);
-        panel.add(divButton);
+
+
 
         frame.add(panel);
-        frame.add(negButton);
         frame.add(delButton);
-        frame.add(clrButton);
         frame.add(textfield);
         frame.setVisible(true);
     }
@@ -121,6 +125,11 @@ public class Calculator implements ActionListener {
             operator='/';
             textfield.setText("");
         }
+        if(e.getSource()==remButton){
+            num1= Double.parseDouble(textfield.getText());
+            operator='%';
+            textfield.setText("");
+        }
         if(e.getSource()==equButton){
             num2= Double.parseDouble(textfield.getText());
 
@@ -129,6 +138,7 @@ public class Calculator implements ActionListener {
                 case'-': result=num1-num2; break;
                 case'*': result=num1*num2; break;
                 case'/': result=num1/num2; break;
+                case'%': result=num1%num2; break;
             }
             textfield.setText(String.valueOf(result));
             num1=result;
